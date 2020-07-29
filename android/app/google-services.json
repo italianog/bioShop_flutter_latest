@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "905628435904",
+    "firebase_url": "https://react-bioshop.firebaseio.com",
+    "project_id": "react-bioshop",
+    "storage_bucket": "react-bioshop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905628435904:android:0a25ba5e506b53277df425",
+        "android_client_info": {
+          "package_name": "ciccio.bioshopapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905628435904-4943b79bc506pehr5vumd2itdqqa3tg1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ciccio.bioshopapp",
+            "certificate_hash": "89fb4c3647b78859db4b354d3af35df6931f02a5"
+          }
+        },
+        {
+          "client_id": "905628435904-jbcndfofn8cpr0n92n6fq4cjnrd71c1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeGBvTODd_B8OcFIjtBN5-kUQgePeYDFs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905628435904-jbcndfofn8cpr0n92n6fq4cjnrd71c1m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
