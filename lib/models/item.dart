@@ -6,7 +6,7 @@ class Item {
   final String desc;
   final double prezzo;
   final int rating;
-  final String imgUrl;
+  final String photoUrl;
   final int feedbacks;
 
   Item(
@@ -14,7 +14,7 @@ class Item {
       this.desc,
       this.prezzo,
       this.rating,
-      this.imgUrl,
+      this.photoUrl,
       this.feedbacks});
 
   factory Item.fromDocument(DocumentSnapshot doc) {
@@ -23,7 +23,7 @@ class Item {
       desc: doc['desc'],
       prezzo: doc['prezzo'],
       rating: doc['rating'],
-      imgUrl: doc['imgUrl'],
+      photoUrl: doc['photoUrl'],
       feedbacks: doc['feedbacks'],
     );
   }

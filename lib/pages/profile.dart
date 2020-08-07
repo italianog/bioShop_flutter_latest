@@ -27,7 +27,7 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 16.0),
+              padding: const EdgeInsets.only(top: 32.0),
               child: Text(
                 "Il mio Profilo",
                 style: TextStyle(

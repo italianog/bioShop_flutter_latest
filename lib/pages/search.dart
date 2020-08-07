@@ -125,7 +125,7 @@ class ItemResult extends StatelessWidget {
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.grey,
-                backgroundImage: CachedNetworkImageProvider(item.imgUrl),
+                backgroundImage: CachedNetworkImageProvider(item.photoUrl),
               ),
               title: Text(
                 item.title,

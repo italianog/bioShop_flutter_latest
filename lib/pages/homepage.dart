@@ -1,5 +1,7 @@
 import 'package:bioshopapp/models/user.dart';
+import 'package:bioshopapp/pages/profile_page.dart';
 import 'package:bioshopapp/widgets/SideBar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,6 +14,9 @@ import 'package:bioshopapp/pages/search.dart';
 import 'package:bioshopapp/pages/shop.dart';
 import 'package:bioshopapp/pages/profile.dart';
 import 'package:bioshopapp/pages/top_products.dart';
+import 'package:bioshopapp/widgets/custom_button.dart';
+import 'package:bioshopapp/pages/checkout_screen.dart';
+import 'package:bioshopapp/pages/signup_page.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final StorageReference storageRef = FirebaseStorage.instance.ref();
@@ -39,7 +44,6 @@ class _HomepageState extends State<Homepage> {
   bool isAuth = false;
   PageController pageController;
   int pageIndex = 0;
-  Image bg;
 
   @override
   void dispose() {
@@ -56,7 +60,6 @@ class _HomepageState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
-    bg = Image.asset('assets/images/bg.jpg');
     pageController = PageController();
     googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignin(account);
@@ -74,7 +77,6 @@ class _HomepageState extends State<Homepage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    precacheImage(bg.image, context);
   }
 
   handleSignin(GoogleSignInAccount account) {
@@ -138,30 +140,67 @@ class _HomepageState extends State<Homepage> {
 //          ),
           TopProducts(),
           Shop(),
-          Search(),
-          Profile(),
-          buildUnAuthScreen(),
+//          Search(),
+          ProfilePage(),
+          Checkout(),
         ],
         controller: pageController,
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: CupertinoTabBar(
-          currentIndex: pageIndex,
-          onTap: onTap,
-          activeColor: Colors.indigo,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.star_border)),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart)),
-            BottomNavigationBarItem(
+        currentIndex: pageIndex,
+        onTap: onTap,
+        activeColor: Colors.teal,
+        backgroundColor: Colors.white54,
+        items: [
+          BottomNavigationBarItem(
               icon: Icon(
-                Icons.search,
-                size: 35.0,
-              ),
+            Icons.star_border,
+            size: 25,
+          )),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart,
+              size: 25,
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.account_circle)),
-            BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.code)),
-          ]),
+          ),
+//            BottomNavigationBarItem(
+//              icon: Icon(
+//                Icons.search,
+//                size: 30.0,
+//              ),
+//            ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle,
+              size: 25,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.moneyCheckAlt, size: 25),
+          ),
+          BottomNavigationBarItem(
+            icon: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Icon(
+                  FontAwesomeIcons.solidCircle,
+                  size: 25,
+                  color: Colors.teal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 2.0),
+                  child: Text(
+                    "4",
+                    style: TextStyle(color: Colors.white, fontSize: 16.0),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
 //      body: Container(
 //        decoration: BoxDecoration(
@@ -205,7 +244,8 @@ class _HomepageState extends State<Homepage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/bg.jpg"),
+            image: CachedNetworkImageProvider(
+                'https://images.unsplash.com/photo-1557800634-7bf3c7305596?ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80'),
             fit: BoxFit.cover,
           ),
         ),
@@ -214,6 +254,9 @@ class _HomepageState extends State<Homepage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: 50,
+            ),
             Text(
               'bioShop',
               style: TextStyle(
@@ -227,37 +270,11 @@ class _HomepageState extends State<Homepage> {
             ),
             Column(
               children: <Widget>[
-                GestureDetector(
+                CustomButton(
+                  text: "Login con Google",
+                  colore: Colors.blueAccent,
                   onTap: login,
-                  child: Container(
-                    width: 250,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: EdgeInsets.all(5.0),
-                    margin: EdgeInsets.all(2.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Icon(
-                            Icons.exit_to_app,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          "Login con Google",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  icona: Icons.exit_to_app,
                 ),
                 SizedBox(
                   height: 10,
@@ -297,7 +314,7 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
             SizedBox(
-              height: 50,
+              height: 200,
             ),
             Container(
               child: Column(
@@ -324,7 +341,7 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 30,
             ),
             Container(
               child: Row(
