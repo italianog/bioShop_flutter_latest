@@ -18,6 +18,8 @@ import 'package:bioshopapp/widgets/custom_button.dart';
 import 'package:bioshopapp/pages/checkout_screen.dart';
 import 'package:bioshopapp/pages/signup_page.dart';
 
+import 'firebase_testing_fetchData.dart';
+
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final StorageReference storageRef = FirebaseStorage.instance.ref();
 final DateTime timestamp = DateTime.now();
@@ -82,6 +84,7 @@ class _HomepageState extends State<Homepage> {
   handleSignin(GoogleSignInAccount account) {
     if (account != null) {
       createUserInFirestore();
+
       setState(() {
         isAuth = true;
       });
@@ -117,6 +120,7 @@ class _HomepageState extends State<Homepage> {
     }
 
     currentUser = User.fromDocument(doc);
+
     print(currentUser);
     print(currentUser.username);
   }
@@ -133,7 +137,6 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          // Timeline(),
 //          RaisedButton(
 //            child: Text('Logout'),
 //            onPressed: logout,
@@ -142,6 +145,7 @@ class _HomepageState extends State<Homepage> {
           Shop(),
 //          Search(),
           ProfilePage(),
+          Test(),
           Checkout(),
         ],
         controller: pageController,
@@ -151,8 +155,8 @@ class _HomepageState extends State<Homepage> {
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: pageIndex,
         onTap: onTap,
-        activeColor: Colors.teal,
-        backgroundColor: Colors.white54,
+        activeColor: Colors.lightBlue,
+        backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
               icon: Icon(
@@ -187,7 +191,7 @@ class _HomepageState extends State<Homepage> {
                 Icon(
                   FontAwesomeIcons.solidCircle,
                   size: 25,
-                  color: Colors.teal,
+                  color: Colors.lightBlue,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 2.0),
@@ -240,7 +244,6 @@ class _HomepageState extends State<Homepage> {
   Scaffold buildUnAuthScreen() {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      //drawer: NavDrawer(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -403,5 +406,14 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return isAuth ? buildAuthScreen() : buildUnAuthScreen();
+  }
+}
+
+class MySnackBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SnackBar(
+      content: Text("Bentornato $currentUser"),
+    );
   }
 }

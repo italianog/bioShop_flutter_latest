@@ -1,8 +1,11 @@
+import 'package:bioshopapp/pages/vendite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/painting.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:bioshopapp/pages/vendi.dart';
+
+import 'ordini_details.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -24,8 +27,8 @@ class ProfilePage extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 60.0,
-                backgroundImage: CachedNetworkImageProvider(
-                    "https://png2.kisspng.com/sh/c525d4fca63a88646c57f15e1d55c045/L0KzQYm3VsI3N6Z8i5H0aYP2gLBuTfF3aaVmip9Ac3X1PbT2jgB2fJZ3Rdtsb372PcT2hwR4aaNqRdZudnXvf8Hskr02amQ3T9VsOXPmQYbtV745P2M8SqkDMEG4Q4G3U8U1OGI9S6g3cH7q/kisspng-avatar-user-computer-icons-software-developer-5b327cc9cc15f7.872727801530035401836.png"),
+                backgroundImage:
+                    CachedNetworkImageProvider("https://tinyurl.com/y2dm5al7"),
                 backgroundColor: Colors.transparent,
               ),
             ),
@@ -114,9 +117,9 @@ class ProfilePage extends StatelessWidget {
               padding: EdgeInsets.only(left: 30),
               alignment: Alignment.topLeft,
               child: Text(
-                "Interessi",
+                "Più acquistati",
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -129,7 +132,15 @@ class ProfilePage extends StatelessWidget {
                     padding: EdgeInsets.all(2),
                     margin: EdgeInsets.all(2),
                     child: Card(
-                      child: Text("Sono una card di prova"),
+                      color: Colors.blue,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 2.0),
+                        child: Text(
+                          "Frutta Tropicale",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                       elevation: 2.0,
                     ),
                   ),
@@ -137,7 +148,15 @@ class ProfilePage extends StatelessWidget {
                     padding: EdgeInsets.all(2),
                     margin: EdgeInsets.all(2),
                     child: Card(
-                      child: Text("Sono una card di prova"),
+                      color: Colors.blue,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 2.0),
+                        child: Text(
+                          "Km Zero",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                       elevation: 2.0,
                     ),
                   ),
@@ -153,7 +172,7 @@ class ProfilePage extends StatelessWidget {
               child: Text(
                 "Più venduti",
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -166,7 +185,15 @@ class ProfilePage extends StatelessWidget {
                     padding: EdgeInsets.all(2),
                     margin: EdgeInsets.all(2),
                     child: Card(
-                      child: Text("Sono una card di prova"),
+                      color: Colors.blue,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 2.0),
+                        child: Text(
+                          "Agrumi",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                       elevation: 2.0,
                     ),
                   ),
@@ -174,13 +201,76 @@ class ProfilePage extends StatelessWidget {
                     padding: EdgeInsets.all(2),
                     margin: EdgeInsets.all(2),
                     child: Card(
-                      child: Text("Sono una card di prova"),
+                      color: Colors.blue,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 2.0),
+                        child: Text(
+                          "Frutta Bio",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                       elevation: 2.0,
                     ),
                   ),
                 ],
               ),
             ),
+            ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                Divider(color: Colors.black54),
+//                ListTile(
+//                  onTap: () {
+//                    print("Suca");
+//                  },
+//                  title: Padding(
+//                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+//                    child: Text("I miei ordini"),
+//                  ),
+//                  trailing: IconButton(
+//                    icon: Icon(Icons.arrow_right),
+//                  ),
+//                ),
+//                Divider(color: Colors.black54),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Ordini(),
+                      ),
+                    );
+                  },
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text("I miei acquisti"),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.arrow_right),
+                  ),
+                ),
+                Divider(color: Colors.black54),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Vendite(),
+                      ),
+                    );
+                  },
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text("Le mie vendite"),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.arrow_right),
+                  ),
+                ),
+                Divider(color: Colors.black54),
+              ],
+            )
           ],
         ),
       ),

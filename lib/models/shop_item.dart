@@ -8,6 +8,7 @@ class ShopItem {
   final String id;
   final String photoUrl;
   final int disp;
+  final int feedbacks;
 
   ShopItem copyWith({int disp}) {
     return ShopItem(
@@ -15,5 +16,11 @@ class ShopItem {
     );
   }
 
-  ShopItem({this.nome, this.desc, this.id, this.photoUrl, this.disp});
+  ShopItem(
+      {this.nome,
+      this.desc,
+      this.id,
+      this.photoUrl,
+      this.disp,
+      this.feedbacks});
 }

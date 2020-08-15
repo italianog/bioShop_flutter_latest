@@ -90,7 +90,7 @@ class _SearchState extends State<Search> {
           }
           List<ItemResult> searchResults = [];
           snapshot.data.documents.forEach((doc) {
-            Item item = Item.fromDocument(doc);
+            Product item = Product.fromDocument(doc);
             ItemResult searchResult = ItemResult(item);
             searchResults.add(searchResult);
           });
@@ -112,7 +112,7 @@ class _SearchState extends State<Search> {
 }
 
 class ItemResult extends StatelessWidget {
-  final Item item;
+  final Product item;
   ItemResult(this.item);
   @override
   Widget build(BuildContext context) {
@@ -128,7 +128,7 @@ class ItemResult extends StatelessWidget {
                 backgroundImage: CachedNetworkImageProvider(item.photoUrl),
               ),
               title: Text(
-                item.title,
+                item.nome,
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),

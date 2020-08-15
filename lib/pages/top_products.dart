@@ -1,7 +1,9 @@
 import 'package:bioshopapp/models/item.dart';
 import 'package:bioshopapp/pages/detail_page.dart';
+import 'package:bioshopapp/pages/firebase_testing_fetchData.dart';
 import 'package:bioshopapp/pages/homepage.dart';
 import 'package:bioshopapp/widgets/progress.dart';
+import 'package:bioshopapp/widgets/storia.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,7 +36,7 @@ class _TopProductsState extends State<TopProducts> {
         }
         List<TopRated> ratingResults = [];
         snapshot.data.documents.forEach((doc) {
-          Item item = Item.fromDocument(doc);
+          Product item = Product.fromDocument(doc);
           TopRated ratingResult = TopRated(item);
           ratingResults.add(ratingResult);
         });
@@ -73,7 +75,7 @@ class _TopProductsState extends State<TopProducts> {
 }
 
 class TopRated extends StatelessWidget {
-  final Item item;
+  final Product item;
 
   TopRated(this.item);
 
@@ -100,7 +102,7 @@ class TopRated extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Detail(),
+                  builder: (context) => Detail(item: item),
                 ),
               ),
             },
@@ -183,71 +185,162 @@ class Stories extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 42,
-                  backgroundColor: Colors.redAccent.withOpacity(0.5),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: CachedNetworkImageProvider(
-                        'https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80'),
-                  ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=802&q=80",
+                    prezzo: 2.99,
+                    rating: 5,
+                    nome: "Mandarino",
+                    disp: 10,
+                    desc: "DOP Sicilia"),
+              ),
+              Story(
+                prodotto: Product(
+                  photoUrl:
+                      "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1268&q=80",
+                  prezzo: 8.99,
+                  rating: 5,
+                  nome: "Avocado",
+                  disp: 10,
+                  desc: "America Centrale",
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 42,
-                  backgroundColor: Colors.redAccent.withOpacity(0.5),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: CachedNetworkImageProvider(
-                        'https://images.unsplash.com/photo-1549007953-2f2dc0b24019?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80'),
-                  ),
-                ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1528825871115-3581a5387919?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=658&q=80",
+                    prezzo: 3.99,
+                    rating: 4,
+                    nome: "Banana",
+                    disp: 10,
+                    desc: "America,Centrale"),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 42,
-                  backgroundColor: Colors.redAccent.withOpacity(0.5),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: CachedNetworkImageProvider(
-                        'https://images.unsplash.com/photo-1572635148818-ef6fd45eb394?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=80'),
-                  ),
-                ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1579613832125-5d34a13ffe2a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+                    prezzo: 2.99,
+                    rating: 5,
+                    nome: "Mela",
+                    disp: 10,
+                    desc: "Marlene"),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 42,
-                  backgroundColor: Colors.redAccent.withOpacity(0.5),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: CachedNetworkImageProvider(
-                      'https://images.unsplash.com/photo-1577730618729-76ab611700b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                    ),
-                  ),
-                ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1589533610925-1cffc309ebaa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+                    prezzo: 4.99,
+                    rating: 4,
+                    nome: "Fragola",
+                    disp: 10,
+                    desc: "Sicilia"),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 42,
-                  backgroundColor: Colors.redAccent.withOpacity(0.5),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-1581375074612-d1fd0e661aeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'),
-                  ),
-                ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1591538579798-ddcb99b7e16c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
+                    prezzo: 4.99,
+                    rating: 3,
+                    nome: "Melone_Retato",
+                    disp: 10,
+                    desc: "Roma"),
+              ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1572635148818-ef6fd45eb394?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
+                    prezzo: 2.99,
+                    rating: 5,
+                    nome: "Limone",
+                    disp: 10,
+                    desc: "Sicilia"),
+              ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1531171596281-8b5d26917d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
+                    prezzo: 3.99,
+                    rating: 4,
+                    nome: "Pesca",
+                    disp: 10,
+                    desc: "Calabria"),
+              ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/flagged/photo-1579410137922-543ed48d263e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=80",
+                    prezzo: 5.99,
+                    rating: 4,
+                    nome: "Noce",
+                    disp: 10,
+                    desc: "Sicilia"),
+              ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1571337547740-a56ef4b5aa05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+                    prezzo: 3.99,
+                    rating: 2,
+                    nome: "Fico",
+                    disp: 10,
+                    desc: "Sicilia"),
+              ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+                    prezzo: 4.99,
+                    rating: 4,
+                    nome: "Ananas",
+                    disp: 10,
+                    desc: "Paraguay"),
+              ),
+              Story(
+                prodotto: Product(
+                    photoUrl:
+                        "https://images.unsplash.com/photo-1590420409557-35c2469693a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=975&q=80",
+                    prezzo: 8.99,
+                    rating: 4,
+                    nome: "Ciliegia",
+                    disp: 10,
+                    desc: "Napoli"),
               ),
             ],
           ),
         )
       ],
+    );
+  }
+}
+
+class Story extends StatelessWidget {
+  Product prodotto;
+
+  Story({this.prodotto});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CircleAvatar(
+        radius: 42,
+        backgroundColor: Colors.redAccent.withOpacity(0.5),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Storia(
+                          product: this.prodotto,
+                        )));
+          },
+          child: CircleAvatar(
+            radius: 40,
+            backgroundImage: CachedNetworkImageProvider(prodotto.photoUrl),
+          ),
+        ),
+      ),
     );
   }
 }

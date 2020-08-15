@@ -51,6 +51,9 @@ dependencies:
   flutter_redux: ^0.6.0
   redux: ^4.0.0+3
   redux_logging: ^0.4.0
+  shared_preferences: ^0.5.8
+  redux_thunk: ^0.3.0
+  smooth_star_rating: ^1.1.1
 
 dev_dependencies:
   flutter_test:
