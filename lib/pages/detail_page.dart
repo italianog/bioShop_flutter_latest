@@ -1,9 +1,13 @@
+import 'package:bioshopapp/actions/actions.dart';
+import 'package:bioshopapp/models/app_state.dart';
+import 'package:bioshopapp/models/cart.dart';
 import 'package:bioshopapp/models/item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bioshopapp/widgets/custom_button.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bioshopapp/models/model_feedback.dart';
 
@@ -13,6 +17,7 @@ final feedRef = Firestore.instance.collection('feedbacks');
 
 class Detail extends StatefulWidget {
   Product item;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Detail({this.item});
 
@@ -45,8 +50,8 @@ class _DetailState extends State<Detail> {
   List<DropdownMenuItem<int>> getDropDownMenuCurrencyItems() {
     List<DropdownMenuItem<int>> items = new List();
     for (int qta in quantity) {
-      items.add(
-          new DropdownMenuItem(value: qta, child: new Text(qta.toString())));
+      items.add(new DropdownMenuItem(
+          value: qta, child: Center(child: Text(qta.toString()))));
     }
     return items;
   }
@@ -70,6 +75,7 @@ class _DetailState extends State<Detail> {
         ),
         backgroundColor: Colors.white54,
       ),
+      key: widget._scaffoldKey,
       body: Container(
 //        decoration: BoxDecoration(
 //          gradient: LinearGradient(
@@ -155,8 +161,10 @@ class _DetailState extends State<Detail> {
                       ),
                       Center(
                         child: DropdownButton(
+                          isDense: true,
                           hint: Text("Selezionare la quantità: "),
                           items: getDropDownMenuCurrencyItems(),
+//                          value: _indexDropdown,
                           onChanged: (value) {
                             setState(() {
                               _indexDropdown = value;
@@ -168,6 +176,18 @@ class _DetailState extends State<Detail> {
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: CustomButton(
+                            onTap: () {
+                              StoreProvider.of<AppState>(context).dispatch(
+                                  toggleCartProductAction(CartProduct(
+                                      prodotto: widget.item, qta: 1)));
+                              final snackbar = SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text("Carrello aggiornato"),
+                                backgroundColor: Colors.lightBlue,
+                              );
+                              widget._scaffoldKey.currentState
+                                  .showSnackBar(snackbar);
+                            },
                             text: "Aggiungi al Carrello",
                             colore: Colors.orangeAccent,
                           ),

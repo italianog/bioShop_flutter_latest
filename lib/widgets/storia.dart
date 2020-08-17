@@ -4,6 +4,7 @@ import 'package:bioshopapp/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bioshopapp/models/item.dart';
+import 'package:swipedetector/swipedetector.dart';
 
 class Storia extends StatefulWidget {
   final Product product;
@@ -29,14 +30,20 @@ class _StoriaState extends State<Storia> {
           padding: const EdgeInsets.all(0.0),
           child: Stack(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(widget.product.photoUrl),
-                    fit: BoxFit.cover,
+              SwipeDetector(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    image: DecorationImage(
+                      image:
+                          CachedNetworkImageProvider(widget.product.photoUrl),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
+                onSwipeUp: () {
+                  Navigator.pop(context);
+                },
               ),
               Padding(
                 padding: EdgeInsets.only(top: 25.0, right: 10.0),

@@ -48,26 +48,27 @@ class _VendiState extends State<Vendi> {
         appBar: AppBar(
           backgroundColor: Colors.white70,
           title: Text(
-            "Vendi",
+            "Coming Soon",
             style: TextStyle(color: Colors.black54),
           ),
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            Center(
-              child: DropdownButton(
-                items: getDropDownMenuCurrencyItems(),
-                hint: Text("Selezionare la categoria"),
-                onChanged: (value) {
-                  setState(() {
-                    _currentIndex = value;
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
+        body: Text("Rilascio nella versione 2.0"),
+//        body: Column(
+//          children: [
+//            Center(
+//              child: DropdownButton(
+//                items: getDropDownMenuCurrencyItems(),
+//                hint: Text("Selezionare la categoria"),
+//                onChanged: (value) {
+//                  setState(() {
+//                    _currentIndex = value;
+//                  });
+//                },
+//              ),
+//            ),
+//          ],
+//        ),
       ),
     );
   }

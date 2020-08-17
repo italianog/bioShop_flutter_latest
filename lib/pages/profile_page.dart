@@ -1,3 +1,4 @@
+import 'package:bioshopapp/pages/preferiti.dart';
 import 'package:bioshopapp/pages/vendite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,15 +13,17 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 10),
-              child: Text(
-                "My Profile",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              child: Center(
+                child: Text(
+                  "My Profile",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -32,9 +35,11 @@ class ProfilePage extends StatelessWidget {
                 backgroundColor: Colors.transparent,
               ),
             ),
-            Text(
-              "Giovanni",
-              style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+            Center(
+              child: Text(
+                "Giovanni",
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -263,6 +268,24 @@ class ProfilePage extends StatelessWidget {
                   title: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text("Le mie vendite"),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.arrow_right),
+                  ),
+                ),
+                Divider(color: Colors.black54),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Preferiti(),
+                      ),
+                    );
+                  },
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text("I miei Preferiti"),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.arrow_right),

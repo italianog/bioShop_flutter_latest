@@ -15,36 +15,37 @@ import 'package:redux_thunk/redux_thunk.dart';
 void main() {
   final store = Store<AppState>(
     appReducer,
-    initialState: AppState(
-      shopItem: ShopItem(),
-    ),
+    initialState: AppState.initial(),
     middleware: [
       LoggingMiddleware.printer(),
       thunkMiddleware,
     ],
   );
 
-  print("InitialState: ${store.state}");
+  runApp(MyApp(
+    store: store,
+  ));
+  print("InitialState: ${store.state.cartProducts}");
 
-  runApp(StoreProvider(store: store, child: MyApp()));
-  fetchData();
+  //fetchData();
 }
 
 class MyApp extends StatelessWidget {
+  final Store<AppState> store;
+  MyApp({this.store});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'BioShop',
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return StoreProvider(
+      store: store,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'BioShop',
+        theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: Homepage(),
       ),
-//      routes: {
-//        'shop': (BuildContext context) => Shop(onInit: () {
-//              StoreProvider.of<AppState>(context).dispatch(getProductsAction);
-//            }),
-//      },
-      home: Homepage(),
     );
   }
 }

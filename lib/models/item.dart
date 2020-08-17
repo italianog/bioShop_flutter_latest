@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Product {
+  final String id;
   final String nome;
   final String desc;
   final double prezzo;
@@ -12,6 +13,7 @@ class Product {
   final int feedCount;
 
   Product({
+    this.id,
     this.nome,
     this.desc,
     this.prezzo,
@@ -23,6 +25,7 @@ class Product {
 
   factory Product.fromDocument(DocumentSnapshot doc) {
     return Product(
+      id: doc.documentID,
       nome: doc['nome'],
       desc: doc['desc'],
       prezzo: doc['prezzo'],
@@ -33,12 +36,8 @@ class Product {
     );
   }
 
-//  Product getProductbyId(String id) {
-//    var docRef = itemsRef.document(id);
-//    docRef.get().then((doc) => Product.fromDocument(doc));
-//  }
-
   List<Widget> countStars(Product product, Color colore) {
+    // ignore: non_constant_identifier_names
     final StarIcon = Icon(
       Icons.star,
       size: 15,

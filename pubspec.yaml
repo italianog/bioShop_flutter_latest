@@ -54,6 +54,8 @@ dependencies:
   shared_preferences: ^0.5.8
   redux_thunk: ^0.3.0
   smooth_star_rating: ^1.1.1
+  swipedetector: ^1.2.0
+  badges: ^1.1.1
 
 dev_dependencies:
   flutter_test:

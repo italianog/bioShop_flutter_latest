@@ -5,6 +5,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bioshopapp/widgets/item_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bioshopapp/models/item.dart';
+import 'package:redux_thunk/redux_thunk.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:bioshopapp/models/app_state.dart';
 
 final List<Widget> lista_one = [
   ItemCard_list(
@@ -43,7 +46,7 @@ final List<Widget> lista_two = [
   ItemCard_list(
       product: Product(
           photoUrl:
-              "https://images.unsplash.com/photo-1571575173700-afb9492e6a50?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=752&q=80",
+              "https://images.unsplash.com/photo-1591538579798-ddcb99b7e16c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
           prezzo: 4.99,
           feedCount: 12,
           rating: 3,
@@ -117,7 +120,7 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   void initState() {
     super.initState();
-//    widget.onInit();
+    widget.onInit();
   }
 
   TextEditingController searchController = TextEditingController();
@@ -169,45 +172,50 @@ class _ShopState extends State<Shop> {
     return Scaffold(
       appBar: buildSearchField(),
       body: Container(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: ListView(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text(
-                          "Visualizzati di recente",
-                          style: TextStyle(fontFamily: "Poppins"),
-                        ),
+        child: StoreConnector<AppState, AppState>(
+          converter: (store) => store.state,
+          builder: (_, state) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: ListView(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              "Visualizzati di recente",
+                              style: TextStyle(fontFamily: "Poppins"),
+                            ),
+                          ),
+                          ListExample(myList: lista_one),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              "Simili a quello che hai visto",
+                              style: TextStyle(fontFamily: "Poppins"),
+                            ),
+                          ),
+                          ListExample(myList: lista_two),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              "Ti potrebbe piacere",
+                              style: TextStyle(fontFamily: "Poppins"),
+                            ),
+                          ),
+                          ListExample(myList: lista_three),
+                        ],
                       ),
-                      ListExample(myList: lista_one),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text(
-                          "Simili a quello che hai visto",
-                          style: TextStyle(fontFamily: "Poppins"),
-                        ),
-                      ),
-                      ListExample(myList: lista_two),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text(
-                          "Ti potrebbe piacere",
-                          style: TextStyle(fontFamily: "Poppins"),
-                        ),
-                      ),
-                      ListExample(myList: lista_three),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

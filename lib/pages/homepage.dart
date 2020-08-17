@@ -17,8 +17,12 @@ import 'package:bioshopapp/pages/top_products.dart';
 import 'package:bioshopapp/widgets/custom_button.dart';
 import 'package:bioshopapp/pages/checkout_screen.dart';
 import 'package:bioshopapp/pages/signup_page.dart';
-
 import 'firebase_testing_fetchData.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:bioshopapp/models/app_state.dart';
+import 'package:redux_thunk/redux_thunk.dart';
+import 'package:bioshopapp/actions/actions.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final StorageReference storageRef = FirebaseStorage.instance.ref();
@@ -43,6 +47,7 @@ logout() {
 }
 
 class _HomepageState extends State<Homepage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isAuth = false;
   PageController pageController;
   int pageIndex = 0;
@@ -81,10 +86,18 @@ class _HomepageState extends State<Homepage> {
     super.didChangeDependencies();
   }
 
+  void _showSuccessSnack() {
+    final snackbar = SnackBar(
+      content: Text("Bentornato ${currentUser.username}"),
+      backgroundColor: Colors.lightBlue.withOpacity(0.8),
+      duration: Duration(seconds: 3),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackbar);
+  }
+
   handleSignin(GoogleSignInAccount account) {
     if (account != null) {
       createUserInFirestore();
-
       setState(() {
         isAuth = true;
       });
@@ -115,14 +128,11 @@ class _HomepageState extends State<Homepage> {
         "bio": "",
         "timestamp": timestamp
       });
-
-      doc = await usersRef.document(user.id).get();
+    } else {
+      currentUser = User.fromDocument(doc);
+      _showSuccessSnack();
+      print(currentUser.username);
     }
-
-    currentUser = User.fromDocument(doc);
-
-    print(currentUser);
-    print(currentUser.username);
   }
 
   onTap(int pageIndex) {
@@ -135,23 +145,6 @@ class _HomepageState extends State<Homepage> {
 
   Scaffold buildAuthScreen() {
     return Scaffold(
-      body: PageView(
-        children: <Widget>[
-//          RaisedButton(
-//            child: Text('Logout'),
-//            onPressed: logout,
-//          ),
-          TopProducts(),
-          Shop(),
-//          Search(),
-          ProfilePage(),
-          Test(),
-          Checkout(),
-        ],
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        physics: NeverScrollableScrollPhysics(),
-      ),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: pageIndex,
         onTap: onTap,
@@ -196,7 +189,7 @@ class _HomepageState extends State<Homepage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 2.0),
                   child: Text(
-                    "4",
+                    "0",
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 )
@@ -205,7 +198,38 @@ class _HomepageState extends State<Homepage> {
           ),
         ],
       ),
+      key: _scaffoldKey,
+      body: Container(
+        child: StoreConnector<AppState, AppState>(
+          converter: (store) => store.state,
+          builder: (_, state) {
+            return PageView(
+              children: <Widget>[
+//          RaisedButton(
+//            child: Text('Logout'),
+//            onPressed: logout,
+//          ),
+                TopProducts(),
+                Shop(
+                  onInit: () {
+                    StoreProvider.of<AppState>(context)
+                        .dispatch(getProductsAction);
+                  },
+                ),
+//          Search(),
+                ProfilePage(),
+                Test(),
+                Checkout(cart: state.cartProducts),
+              ],
+              controller: pageController,
+              onPageChanged: onPageChanged,
+              physics: NeverScrollableScrollPhysics(),
+            );
+          },
+        ),
+      ),
     );
+
 //      body: Container(
 //        decoration: BoxDecoration(
 //          gradient: LinearGradient(
