@@ -14,6 +14,8 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 10),

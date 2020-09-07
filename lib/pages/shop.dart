@@ -1,4 +1,5 @@
 import 'package:bioshopapp/pages/checkout_screen.dart';
+import 'package:bioshopapp/pages/homepage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,6 +20,7 @@ final List<Widget> lista_one = [
           rating: 4,
           nome: "Banana",
           disp: 10,
+          isLiked: false,
           desc: "America,Centrale")),
   ItemCard_list(
       product: Product(
@@ -29,6 +31,7 @@ final List<Widget> lista_one = [
           rating: 5,
           nome: "Mela",
           disp: 10,
+          isLiked: false,
           desc: "Marlene")),
   ItemCard_list(
       product: Product(
@@ -39,6 +42,7 @@ final List<Widget> lista_one = [
           rating: 4,
           nome: "Fragola",
           disp: 10,
+          isLiked: false,
           desc: "Sicilia")),
 ];
 
@@ -52,6 +56,7 @@ final List<Widget> lista_two = [
           rating: 3,
           nome: "Melone Retato",
           disp: 10,
+          isLiked: false,
           desc: "Roma")),
   ItemCard_list(
       product: Product(
@@ -62,6 +67,7 @@ final List<Widget> lista_two = [
           rating: 5,
           nome: "Limone",
           disp: 10,
+          isLiked: false,
           desc: "Sicilia")),
   ItemCard_list(
       product: Product(
@@ -72,6 +78,7 @@ final List<Widget> lista_two = [
           rating: 4,
           nome: "Pesca",
           disp: 10,
+          isLiked: false,
           desc: "Calabria")),
 ];
 
@@ -85,6 +92,7 @@ final List<Widget> lista_three = [
           rating: 4,
           nome: "Noce",
           disp: 10,
+          isLiked: false,
           desc: "Sicilia")),
   ItemCard_list(
       product: Product(
@@ -95,6 +103,7 @@ final List<Widget> lista_three = [
           rating: 4,
           nome: "Ananas",
           disp: 10,
+          isLiked: false,
           desc: "Paraguay")),
   ItemCard_list(
       product: Product(
@@ -105,6 +114,7 @@ final List<Widget> lista_three = [
           rating: 4,
           nome: "Ciliegia",
           disp: 10,
+          isLiked: false,
           desc: "Napoli")),
 ];
 
@@ -125,6 +135,8 @@ class _ShopState extends State<Shop> {
 
   TextEditingController searchController = TextEditingController();
   Future<QuerySnapshot> searchResultsFuture;
+  List<Product> searchResults = [];
+  bool showResults = false;
 
   AppBar buildSearchField() {
     return AppBar(
@@ -161,10 +173,33 @@ class _ShopState extends State<Shop> {
 
   void clearSearch() {
     searchController.clear();
+    searchResults = [];
+    showResults = false;
+  }
+
+  String capitalize(String input) {
+    if (input == null) {
+      throw new ArgumentError("string: $input");
+    }
+    if (input.length == 0) {
+      return input;
+    }
+    return input[0].toUpperCase() + input.substring(1);
   }
 
   handleSearch(String stringa) {
-    return;
+    String fixedString = capitalize(stringa);
+
+    itemsRef
+        .where("nome", isEqualTo: fixedString)
+        .orderBy("nome")
+        .snapshots()
+        .listen((QuerySnapshot querySnapshot) {
+      querySnapshot.documents.forEach((element) {
+        searchResults.insert(0, Product.fromDocument(element));
+      });
+    });
+    showResults = true;
   }
 
   @override
@@ -184,6 +219,25 @@ class _ShopState extends State<Shop> {
                     Expanded(
                       child: ListView(
                         children: <Widget>[
+                          showResults
+                              ? Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    "Risultato ricerca",
+                                    style: TextStyle(fontFamily: "Poppins"),
+                                  ),
+                                )
+                              : SizedBox(
+                                  height: 0,
+                                  width: 0,
+                                ),
+                          showResults
+                              ? ListExample(myList: [
+                                  ItemCard_list(
+                                    product: searchResults[0],
+                                  ),
+                                ])
+                              : Text(""),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Text(

@@ -112,3 +112,20 @@ class RemoveCartProductAction {
 
   RemoveCartProductAction(this._cartProducts);
 }
+
+ThunkAction<AppState> removeAllCartProductAction() {
+  return (Store<AppState> store) {
+    final List<CartProduct> cartProducts = store.state.cartProducts;
+    cartProducts.clear();
+
+    List<CartProduct> updatedCartProducts = List.from(cartProducts);
+
+    store.dispatch(RemoveAllCartProductAction(updatedCartProducts));
+  };
+}
+
+class RemoveAllCartProductAction {
+  final List<CartProduct> _cartProducts;
+  List<CartProduct> get cartProducts => this._cartProducts;
+  RemoveAllCartProductAction(this._cartProducts);
+}

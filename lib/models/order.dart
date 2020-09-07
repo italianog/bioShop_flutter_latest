@@ -1,16 +1,22 @@
+import 'package:bioshopapp/models/cart.dart';
+import 'package:bioshopapp/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class Order {
-  final String order_id;
-  final num totale;
+//  final List<CartProduct> carrello;
+  final String orderId;
+  final double prezzo;
+  final String username;
+//  final User utente;
+//  final DateTime date;
 
-  Order({this.order_id, this.totale, s});
+  Order({this.orderId, this.prezzo, this.username});
 
   factory Order.fromDocument(DocumentSnapshot doc) {
     return Order(
-      order_id: doc['order_id'],
-      totale: doc['totale'],
+      orderId: doc.documentID,
+      prezzo: doc['prezzo'],
+//      date: doc['date'],
     );
   }
 }

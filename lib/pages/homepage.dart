@@ -14,7 +14,7 @@ import 'package:bioshopapp/pages/search.dart';
 import 'package:bioshopapp/pages/shop.dart';
 import 'package:bioshopapp/pages/profile.dart';
 import 'package:bioshopapp/pages/top_products.dart';
-import 'package:bioshopapp/widgets/custom_button.dart';
+import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:bioshopapp/pages/checkout_screen.dart';
 import 'package:bioshopapp/pages/signup_page.dart';
 import 'firebase_testing_fetchData.dart';
@@ -30,6 +30,7 @@ final DateTime timestamp = DateTime.now();
 final usersRef = Firestore.instance.collection('users');
 final itemsRef = Firestore.instance.collection('items');
 final ordersRef = Firestore.instance.collection('orders');
+final shopsRef = Firestore.instance.collection('shops');
 
 User currentUser;
 
@@ -175,7 +176,7 @@ class _HomepageState extends State<Homepage> {
             ),
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.moneyCheckAlt, size: 25),
+            icon: FaIcon(FontAwesomeIcons.list, size: 25),
           ),
           BottomNavigationBarItem(
             icon: Stack(

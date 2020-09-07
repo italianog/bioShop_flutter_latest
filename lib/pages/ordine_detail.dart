@@ -1,9 +1,31 @@
+import 'package:bioshopapp/models/item.dart';
+import 'package:bioshopapp/pages/detail_page.dart';
+import 'package:bioshopapp/pages/homepage.dart';
+import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
+List<Product> tmp = [];
+
+bool findAlreadyExists(String id) {
+  var snaps =
+      usersRef.document(currentUser.id).collection('feedbacks').document(id);
+  if (snaps.documentID != null) {
+    return true;
+  }
+  return false;
+}
+
 class Ordine extends StatefulWidget {
+  List<Product> prodotti;
+  DocumentSnapshot ds;
+  String orderId;
+
+  Ordine({this.prodotti, this.ds, this.orderId});
+
   @override
   _OrdineState createState() => _OrdineState();
 }
@@ -13,110 +35,102 @@ class _OrdineState extends State<Ordine> {
   bool showTextField = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white70,
-        title: Text(
-          "Dettaglio Ordine",
-          style: TextStyle(color: Colors.black54),
+        appBar: AppBar(
+          backgroundColor: Colors.white70,
+          title: Text(
+            "Dettaglio Ordine",
+            style: TextStyle(color: Colors.black54),
+          ),
         ),
-      ),
-      body: Card(
-        child: Column(
-          children: <Widget>[
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(
-                          "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"),
-                    ),
-                    title: Text("Ananas"),
-                    subtitle: Text("5.99€"),
-                    trailing: SmoothStarRating(
-                      allowHalfRating: true,
-                      onRated: (v) {
-                        setState(() {
-                          showSubmit = true;
-                          showTextField = true;
-                        });
-                      },
-                      starCount: 5,
-                      size: 22.0,
-                      color: Colors.orange,
-                      borderColor: Colors.black12,
-                      spacing: 0.0,
-                    ),
-                  ),
-                ),
-                showTextField
-                    ? Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText: "Inserisci un feedback per il prodotto",
-                              hintStyle: TextStyle(fontSize: 14)),
-                        ),
-                      )
-                    : Text(""),
-                Divider(color: Colors.black54),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(
-                          "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1268&q=80"),
-                    ),
-                    title: Text("Avocado"),
-                    subtitle: Text("8.99€"),
-                    trailing: SmoothStarRating(
-                      allowHalfRating: true,
-                      onRated: (v) {
-                        setState(() {
-                          showSubmit = true;
-                          showTextField = true;
-                        });
-                      },
-                      starCount: 5,
-                      size: 22.0,
-                      color: Colors.orange,
-                      borderColor: Colors.black12,
-                      spacing: 0.0,
-                    ),
-                  ),
-                ),
-                showTextField
-                    ? Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText: "Inserisci un feedback per il prodotto",
-                              hintStyle: TextStyle(fontSize: 14)),
-                        ),
-                      )
-                    : Text(""),
-                Divider(color: Colors.black54),
-              ],
-            ),
-            showSubmit
-                ? (CupertinoButton(
-                    onPressed: () {
-                      _showMyDialog(context);
-                    },
-                    color: Colors.blue,
-                    child: Text(
-                      "Lascia Feedback",
-                    ),
-                  ))
-                : Text(""),
-          ],
-        ),
-      ),
-    );
+        body: StreamBuilder(
+            stream: Firestore.instance
+                .collection("orders")
+                .document(widget.orderId)
+                .collection("carrello")
+                .snapshots(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                default:
+                  return ListView.builder(
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) {
+                        List oggetti = snapshot.data.documents.toList();
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: index == 0
+                                  ? EdgeInsets.only(
+                                      top: 8.0, left: 16.0, right: 16.0)
+                                  : const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      oggetti[index]['photoUrl']),
+                                ),
+                                title: Text(oggetti[index]['nome']),
+                                subtitle: Text(
+                                    oggetti[index]['prezzo'].toString() + " €"),
+                                trailing: findAlreadyExists(
+                                            oggetti[index]['id']) ==
+                                        true
+                                    ? SmoothStarRating(
+                                        allowHalfRating: true,
+                                        onRated: (v) {
+                                          setState(() {
+                                            showSubmit = true;
+                                            showTextField = true;
+                                          });
+                                        },
+                                        starCount: 5,
+                                        size: 22.0,
+                                        color: Colors.orange,
+                                        borderColor: Colors.black12,
+                                        spacing: 0.0,
+                                      )
+                                    : Text("Hai già recensito questo prodotto"),
+                              ),
+                            ),
+                            showTextField
+                                ? Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20.0),
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                          hintText:
+                                              "Inserisci un feedback per il prodotto",
+                                          hintStyle: TextStyle(fontSize: 14)),
+                                    ),
+                                  )
+                                : Text(""),
+                            Divider(
+                              color: Colors.black54,
+                            ),
+                            index == snapshot.data.documents.length - 1
+                                ? showSubmit
+                                    ? SizedBox(
+                                        child: (CustomButton(
+                                          onTap: () {
+                                            _showMyDialog(context);
+                                          },
+                                          colore: Colors.blue,
+                                          text: "Lascia Feedback",
+                                        )),
+                                      )
+                                    : Text("")
+                                : Text(""),
+                          ],
+                        );
+                      });
+              }
+            }));
   }
 }
 
@@ -134,7 +148,7 @@ Future<void> _showMyDialog(context) async {
           child: ListBody(
             children: <Widget>[
               Text('La tua opinione è importante'),
-              Text('Per migliorare la nostra App'),
+              Text('Per migliorare il nostro negozio'),
             ],
           ),
         ),

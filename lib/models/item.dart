@@ -11,6 +11,7 @@ class Product {
   final String photoUrl;
   final int disp;
   final int feedCount;
+  bool isLiked;
 
   Product({
     this.id,
@@ -21,6 +22,7 @@ class Product {
     this.photoUrl,
     this.disp,
     this.feedCount,
+    this.isLiked,
   });
 
   factory Product.fromDocument(DocumentSnapshot doc) {
@@ -33,6 +35,7 @@ class Product {
       photoUrl: doc['photoUrl'],
       disp: doc['disp'],
       feedCount: doc['feedCount'],
+      isLiked: doc['isLiked'],
     );
   }
 

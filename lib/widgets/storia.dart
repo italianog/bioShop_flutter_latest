@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:bioshopapp/widgets/custom_button.dart';
+import 'package:bioshopapp/pages/single_shop.dart';
+import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bioshopapp/models/item.dart';
@@ -20,9 +21,9 @@ class _StoriaState extends State<Storia> {
 
   @override
   Widget build(BuildContext context) {
-    Timer timer = Timer(Duration(seconds: 10), () {
-      Navigator.pop(context);
-    });
+    // Timer timer = Timer(Duration(seconds: 10), () {
+    //   Navigator.pop(context);
+    // });
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(0.0),
@@ -56,7 +57,7 @@ class _StoriaState extends State<Storia> {
                       color: Colors.white,
                       onPressed: () {
                         Navigator.pop(context);
-                        timer.cancel();
+                        // timer.cancel();
                       },
                     ),
                   ],
@@ -67,6 +68,12 @@ class _StoriaState extends State<Storia> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 50.0),
                   child: CustomButton(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SingleShop()));
+                      },
                       text: "Visita il negozio",
                       colore: Colors.deepOrangeAccent),
                 ),

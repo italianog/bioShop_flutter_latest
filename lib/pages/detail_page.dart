@@ -6,7 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bioshopapp/widgets/custom_button.dart';
+import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bioshopapp/models/model_feedback.dart';
@@ -26,7 +26,7 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
-  int _indexDropdown = 0;
+  String _indexDropdown = '1';
   bool showFeedback = false;
   List<myFeedback> feedbacks = [];
 
@@ -39,8 +39,6 @@ class _DetailState extends State<Detail> {
   void getFeedback() async {
     QuerySnapshot querySnapshot = await feedRef.getDocuments();
     var list = querySnapshot.documents;
-    print(list[0].data);
-    print(list[1].data);
     for (var i = 0; i < list.length; i++) {
       myFeedback feedback = myFeedback.fromDocument(list[i]);
       feedbacks.add(feedback);
@@ -77,13 +75,6 @@ class _DetailState extends State<Detail> {
       ),
       key: widget._scaffoldKey,
       body: Container(
-//        decoration: BoxDecoration(
-//          gradient: LinearGradient(
-//            begin: Alignment.centerLeft,
-//            end: Alignment.centerRight,
-//            colors: [Colors.lightBlue, Colors.indigo],
-//          ),
-//        ),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20.0),
@@ -157,20 +148,35 @@ class _DetailState extends State<Detail> {
                             "€ " + widget.item.prezzo.toString(),
                             style: TextStyle(fontFamily: "Poppins"),
                           ),
+                          Center(
+                            child: DropdownButton(
+                              isDense: true,
+                              items: <String>[
+                                '1',
+                                '2',
+                                '3',
+                                '4',
+                                '5',
+                                '6',
+                                '7',
+                                '8',
+                                '9',
+                                '10',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Center(child: Text(value)),
+                                );
+                              }).toList(),
+                              value: _indexDropdown,
+                              onChanged: (value) {
+                                setState(() {
+                                  _indexDropdown = value;
+                                });
+                              },
+                            ),
+                          ),
                         ],
-                      ),
-                      Center(
-                        child: DropdownButton(
-                          isDense: true,
-                          hint: Text("Selezionare la quantità: "),
-                          items: getDropDownMenuCurrencyItems(),
-//                          value: _indexDropdown,
-                          onChanged: (value) {
-                            setState(() {
-                              _indexDropdown = value;
-                            });
-                          },
-                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -179,7 +185,8 @@ class _DetailState extends State<Detail> {
                             onTap: () {
                               StoreProvider.of<AppState>(context).dispatch(
                                   toggleCartProductAction(CartProduct(
-                                      prodotto: widget.item, qta: 1)));
+                                      prodotto: widget.item,
+                                      qta: int.parse(_indexDropdown))));
                               final snackbar = SnackBar(
                                 duration: Duration(seconds: 2),
                                 content: Text("Carrello aggiornato"),

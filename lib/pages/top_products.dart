@@ -2,7 +2,7 @@ import 'package:bioshopapp/models/item.dart';
 import 'package:bioshopapp/pages/detail_page.dart';
 import 'package:bioshopapp/pages/firebase_testing_fetchData.dart';
 import 'package:bioshopapp/pages/homepage.dart';
-import 'package:bioshopapp/widgets/custom_button.dart';
+import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:bioshopapp/widgets/progress.dart';
 import 'package:bioshopapp/widgets/storia.dart';
 import 'package:cached_network_image/cached_network_image.dart';

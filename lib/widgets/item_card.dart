@@ -2,6 +2,7 @@ import 'package:bioshopapp/models/item.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bioshopapp/pages/detail_page.dart';
+import 'package:bioshopapp/pages/homepage.dart';
 
 class ItemCard_list extends StatefulWidget {
   final Product product;
@@ -12,15 +13,29 @@ class ItemCard_list extends StatefulWidget {
   _ItemCard_listState createState() => _ItemCard_listState();
 }
 
+addFavorite(Product product) {
+  usersRef
+      .document("104304702015831572882")
+      .collection('favorites')
+      .document('104304702015831572882')
+      .collection("items")
+      .document(product.nome)
+      .setData({
+    "nome": product.nome,
+    "photoUrl": product.photoUrl,
+    "shop": "shop",
+  });
+}
+
 class _ItemCard_listState extends State<ItemCard_list> {
-  bool doubleTapped = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onDoubleTap: () {
         setState(() {
-          doubleTapped = !doubleTapped;
+          widget.product.isLiked = !widget.product.isLiked;
         });
+        addFavorite(widget.product);
       },
       onTap: () {
         Navigator.push(
@@ -54,8 +69,10 @@ class _ItemCard_listState extends State<ItemCard_list> {
                 children: <Widget>[
                   IconButton(
                     icon: Icon(
-                      doubleTapped ? Icons.favorite : Icons.favorite_border,
-                      color: doubleTapped == true
+                      widget.product.isLiked == true
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: widget.product.isLiked == true
                           ? Colors.redAccent.withOpacity(0.8)
                           : Colors.grey,
                     ),
