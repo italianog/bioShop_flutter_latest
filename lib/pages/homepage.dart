@@ -4,7 +4,7 @@ import 'package:bioshopapp/widgets/SideBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +14,6 @@ import 'package:bioshopapp/pages/search.dart';
 import 'package:bioshopapp/pages/shop.dart';
 import 'package:bioshopapp/pages/profile.dart';
 import 'package:bioshopapp/pages/top_products.dart';
-import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:bioshopapp/pages/checkout_screen.dart';
 import 'package:bioshopapp/pages/signup_page.dart';
 import 'firebase_testing_fetchData.dart';
@@ -23,6 +22,8 @@ import 'package:redux/redux.dart';
 import 'package:bioshopapp/models/app_state.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:bioshopapp/actions/actions.dart';
+import 'package:bioshopapp/widgets/custom_button.dart';
+
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final StorageReference storageRef = FirebaseStorage.instance.ref();

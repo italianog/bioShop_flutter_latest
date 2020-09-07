@@ -4,7 +4,7 @@ import 'package:bioshopapp/widgets/progress.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -60,12 +60,12 @@ class _SearchState extends State<Search> {
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            Center(
-              child: SvgPicture.asset(
-                'assets/images/search.svg',
-                height: orientation == Orientation.portrait ? 250.0 : 150.0,
-              ),
-            ),
+            // Center(
+            //   // child: SvgPicture.asset(
+            //   //   'assets/images/search.svg',
+            //   //   height: orientation == Orientation.portrait ? 250.0 : 150.0,
+            //   // ),
+            // ),
             Text(
               'Find Users',
               textAlign: TextAlign.center,

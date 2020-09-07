@@ -6,10 +6,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bioshopapp/models/model_feedback.dart';
+import 'package:bioshopapp/widgets/custom_button.dart';
+
 
 List<int> quantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 

@@ -4,14 +4,15 @@ import 'package:bioshopapp/models/cart.dart';
 import 'package:bioshopapp/models/item.dart';
 import 'package:bioshopapp/models/order.dart';
 import 'package:bioshopapp/pages/homepage.dart';
+import 'package:bioshopapp/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:badges/badges.dart';
+
 
 class Checkout extends StatefulWidget {
   List<CartProduct> cart;

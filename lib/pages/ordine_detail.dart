@@ -1,12 +1,13 @@
 import 'package:bioshopapp/models/item.dart';
 import 'package:bioshopapp/pages/detail_page.dart';
 import 'package:bioshopapp/pages/homepage.dart';
-import 'file:///C:/Users/Miriam/Desktop/bioshop_vendi/bioshop_vendi/lib/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:bioshopapp/widgets/custom_button.dart';
+
 
 List<Product> tmp = [];
 
